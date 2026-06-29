@@ -1,0 +1,11 @@
+# 缓存 / 临时
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
+# 本地环境
+.env
+.envrc
+.venv/
+.venv_*/

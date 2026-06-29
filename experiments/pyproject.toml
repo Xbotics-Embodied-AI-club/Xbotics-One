@@ -1,0 +1,248 @@
+# Xbotics 全课程统一 uv 开发环境（环境根 = experiments/）。
+#
+# 服务后续所有课程（VLA / RL / RDKS600 …）；各课程代码是 experiments/ 下的子目录
+# （如 vla/），各自按需新增 extra。当前 extra：
+#   vla_train —— VLA GPU 完整训练/演示：  uv sync --extra vla_train
+#   rl_train —— RL GPU 训练/演示：       uv sync --extra rl_train
+#   rl_vlm_grpo —— RL 6.3 小 VLM GRPO： uv sync --extra rl_vlm_grpo
+#   tele  —— SO101 数据采集(CPU)：       uv sync --extra tele
+#   tele_so101_s100 —— RDK S100 板端 SO101 数据采集(aarch64)： uv sync --extra tele_so101_s100 --no-editable
+#   rdks600_act —— RDK S600/S100 ACT BPU 导出(GPU 默认)：uv sync --extra rdks600_act
+#   rdks600_act_cpu —— 同上 CPU 版（轻量/无 GPU）：uv sync --extra rdks600_act_cpu
+#
+# lerobot 先由 ./lerobot/fetch_lerobot.sh 把 v0.5.1 源 clone 到 ./lerobot/lerobot/
+# 并打上 groot 补丁，再以 editable 方式安装（path source 见 [tool.uv.sources]）。
+# 资产（数据集/模型）：本地部署随用随下；Docker 构建时由 docker_cfg/scripts/ 烘进镜像。
+
+[project]
+name = "xbotics-experiments"
+version = "0.0.2"
+requires-python = ">=3.12,<3.13"
+# 通用依赖（所有 extra 都带）：wandb 跨课程通用——训练记录、eval 视频上传等工具都要，
+# 纯 python 无 torch 冲突，不会污染 GPU/CPU/aarch64 三套 torch 路线。
+dependencies = [
+    "wandb",
+]
+
+[project.optional-dependencies]
+# —— 完整训练 / 演示环境（GPU, CUDA 12.8）——
+vla_train = [
+    # PyTorch（GPU，cu128 index 见 [tool.uv.sources]）
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    "torchaudio==2.8.0",
+    "torchcodec==0.7.0",
+    # lerobot 全量（含 pi0 / libero / smolvla / aloha …；all 因 flash-attn 故意不含 groot）
+    "lerobot[all]",
+    "transformers==5.3.0",
+    # 课程章节依赖（2_1 pytorch / 2_3 GPT2 / 5_4 flow_matching 等）
+    "lightning",
+    "torchmetrics",
+    "torchsummary",
+    "tiktoken",
+    "flow-matching==1.0.10",
+    "numpy",
+    "matplotlib",
+    "scikit-learn",
+    "tqdm",
+    "ipython",
+    "ipykernel",
+    "nbconvert",
+    "nbclient",
+]
+
+# —— SO101 数据采集环境（CPU；无需 GPU / 策略 / 仿真）——
+tele = [
+    # PyTorch（CPU index；lerobot core 强依赖 torch，不能不装，只用 CPU 轮子）
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    "torchcodec==0.7.0",
+    # SO101 = 飞特(Feetech)舵机；USB 摄像头由 lerobot core 的 opencv 覆盖
+    "lerobot[feetech]",
+    "numpy",
+]
+
+# —— 地瓜 RDK S100 板端 SO101 数据采集（aarch64/BPU；本地 mirror + --no-editable）——
+tele_so101_s100 = [
+    # 不走 x86 CPU index；PyPI 上有 Linux aarch64 torch/torchvision wheel。
+    # torchcodec 0.7.0 无 Linux aarch64 wheel；lerobot 自身也在 aarch64 marker 中避开它。
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    "lerobot[feetech]",
+    "numpy",
+]
+
+# —— RDK S600/S100 ACT BPU 导出（GPU 默认；加载已训模型 + 导出 ONNX + 生成校准数据）——
+# rdk_LeRobot_tools（s600 分支）纯脚本仓库、不可作 package 依赖，由
+# lerobot/rdk/fetch_rdk_tools.sh clone 到 experiments/lerobot/rdk/rdk_LeRobot_tools/（gitignored）后从其内运行。
+# 导出 config device 可 cpu/cuda；量化编译另走 GPU 版 OE 镜像（docker --gpus all）。
+rdks600_act = [
+    # PyTorch（GPU，cu128 index）
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    # lerobot（lerobot/fetch_lerobot.sh 的 v0.5.1 editable 源）加载 ACT policy
+    "lerobot[feetech]",
+    # export_bpu_actpolicy.py 导出/校准依赖（onnxruntime 供 onnxsim 图简化，CPU 即可）
+    "onnx",
+    "onnxruntime",
+    "onnxsim",
+    "termcolor",
+    "safetensors",
+    "tqdm",
+    "numpy",
+]
+
+# —— 同上·CPU 版（无 GPU 机器 / 想轻量时用）：uv sync --extra rdks600_act_cpu ——
+rdks600_act_cpu = [
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    "lerobot[feetech]",
+    "onnx",
+    "onnxruntime",
+    "onnxsim",
+    "termcolor",
+    "safetensors",
+    "tqdm",
+    "numpy",
+]
+
+# —— RL 课程 GPU 训练 / 演示环境（CUDA 12.8）——
+rl_train = [
+    # PyTorch（GPU，cu128 index 见 [tool.uv.sources]）
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    # G1 并行仿真 + BeyondMimic 训练
+    "mjlab",
+    "mujoco",
+    "mujoco-warp",
+    "warp-lang",
+    # 训练与脚本工具
+    "numpy",
+    "tyro",
+    "tqdm",
+    "wandb",
+    "mediapy",
+    # GVHMR raw-video inference runtime. Keep PyTorch on the shared cu128 stack above.
+    "pytorch3d==0.7.9+pt2.8.0cu128",
+    "lightning",
+    "hydra-core",
+    "hydra-zen",
+    "hydra-colorlog",
+    "timm==0.9.12",
+    "ffmpeg-python",
+    "scikit-image",
+    "termcolor",
+    "einops",
+    "imageio==2.34.1",
+    "av==13.0.0",
+    "joblib",
+    "trimesh",
+    "chumpy",
+    "smplx",
+    "wis3d",
+    "pycolmap",
+    "ultralytics==8.2.42",
+    "cython_bbox",
+    "lapx",
+    "yacs",
+    "scipy",
+    # 3.2 人体视频 -> G1 reference motion 前处理工具，作为 package 安装，不本地 clone
+    "gvhmr",
+    "general-motion-retargeting",
+]
+
+# —— RL 课程 6.3 小 VLM GRPO（单卡，Unsloth/TRL + Lightning）——
+rl_vlm_grpo = [
+    # PyTorch（GPU，cu128 index 见 [tool.uv.sources]）
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    # Unsloth 官方 VLM GRPO notebook 路线
+    "unsloth",
+    "transformers==4.56.2",
+    "trl==0.22.2",
+    "datasets",
+    "accelerate",
+    "peft",
+    "bitsandbytes",
+    "vllm",
+    "lightning",
+    "wandb",
+    "pillow",
+    "qwen-vl-utils",
+    "numpy",
+    "tqdm",
+]
+
+# vla0_grpo —— VLA-0(vla0_smol) LIBERO 评测 + GRPO 后训练：uv sync --extra vla0_grpo
+# 镜像 vla_train（lerobot[all] 带 libero/smolvla）+ vllm（rollout）+ xgrammar（整数串动作约束解码）
+vla0_grpo = [
+    # PyTorch（GPU，cu128 index 见 [tool.uv.sources]）
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+    "torchaudio==2.8.0",
+    "torchcodec==0.7.0",
+    # lerobot 全量（含 libero env / smolvla；vla0_smol policy 经 0002 补丁注入源树）
+    "lerobot[all]",
+    "transformers==5.3.0",
+    "xgrammar",
+    "vllm",
+    "lightning",
+    "wandb",
+    "numpy",
+    "tqdm",
+]
+
+[tool.uv]
+package = false
+# 声明各部署 extra 互斥，使各套依赖（尤其 GPU vs CPU torch）各自独立解析。
+# 各套部署彼此互斥，避免 GPU/x86 CPU/RDK aarch64 的 torch 路线互相污染。
+conflicts = [[{ extra = "vla_train" }, { extra = "rl_train" }, { extra = "rl_vlm_grpo" }, { extra = "vla0_grpo" }, { extra = "tele" }, { extra = "tele_so101_s100" }, { extra = "rdks600_act" }, { extra = "rdks600_act_cpu" }]]
+
+[tool.uv.sources]
+# 本地 clone + 打补丁后的 lerobot 源（由 lerobot/fetch_lerobot.sh 生成，gitignore）
+lerobot = { path = "./lerobot/lerobot", editable = true }
+# torch 系按所选 extra 命中不同 index：vla_train/rl_train→cu128，tele→cpu
+gvhmr = { git = "https://github.com/zju3dv/GVHMR.git" }
+general-motion-retargeting = { git = "https://github.com/YanjieZe/GMR.git" }
+pytorch3d = { url = "https://github.com/MiroPsota/torch_packages_builder/releases/download/pytorch3d-0.7.9/pytorch3d-0.7.9%2Bpt2.8.0cu128-cp312-cp312-linux_x86_64.whl" }
+torch = [
+    { index = "pytorch-cu128", extra = "vla_train" },
+    { index = "pytorch-cu128", extra = "rl_train" },
+    { index = "pytorch-cu128", extra = "rl_vlm_grpo" },
+    { index = "pytorch-cu128", extra = "vla0_grpo" },
+    { index = "pytorch-cpu", extra = "tele" },
+    { index = "pytorch-cu128", extra = "rdks600_act" },
+    { index = "pytorch-cpu", extra = "rdks600_act_cpu" },
+]
+torchvision = [
+    { index = "pytorch-cu128", extra = "vla_train" },
+    { index = "pytorch-cu128", extra = "rl_train" },
+    { index = "pytorch-cu128", extra = "rl_vlm_grpo" },
+    { index = "pytorch-cu128", extra = "vla0_grpo" },
+    { index = "pytorch-cpu", extra = "tele" },
+    { index = "pytorch-cu128", extra = "rdks600_act" },
+    { index = "pytorch-cpu", extra = "rdks600_act_cpu" },
+]
+torchaudio = [
+    { index = "pytorch-cu128", extra = "vla_train" },
+    { index = "pytorch-cu128", extra = "vla0_grpo" },
+]
+warp-lang = { index = "nvidia" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "nvidia"
+url = "https://pypi.nvidia.com/"
+explicit = true
+
+[tool.uv.extra-build-dependencies]
+chumpy = ["pip"]
