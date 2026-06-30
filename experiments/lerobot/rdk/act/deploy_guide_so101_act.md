@@ -109,4 +109,4 @@ python bpu_control_robot.py \
 ## 7. 改回去 / 重训
 
 - 重训 ACT：开发机 `lerobot-train --policy.type=act ...`（数据集 `so101/put_black_cuboid_into_basket`，top/wrist）。
-- 重导出+编译：开发机跑 `experiments/lerobot/rdk/fetch_rdk_tools.sh` 拉的 rdk_LeRobot_tools，用 `bpu_export_config_so101_cuboid_s600.yaml`（act_path 指新 checkpoint，type=nash-p/nash-e），再 `docker run … bash build_all.sh`。
+- 重导出+编译：开发机跑 `experiments/lerobot/rdk/fetch_rdk_tools.sh` 拉的 rdk_LeRobot_tools，用 `bpu_export_config_so101_cuboid_demo.yaml`（act_path 指新 checkpoint，type=nash-p/nash-e），再 `docker run … bash build_all.sh`。

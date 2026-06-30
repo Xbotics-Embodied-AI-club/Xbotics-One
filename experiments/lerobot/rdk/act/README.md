@@ -8,10 +8,9 @@
 
 | 阶段 | 文档 | 配套脚本 / 配置 |
 |---|---|---|
-| 1. 导出 + 量化编译 | [`convert-act-to-bpu-walkthrough.md`](convert-act-to-bpu-walkthrough.md) | `bpu_export_config_so101_cuboid_demo.yaml`、`bpu_export_config_so101_cuboid_s600.yaml` |
-| 2. 部署到板 / 真机抓放 | [`deploy_guide_so101_act.md`](deploy_guide_so101_act.md) | `bpu_control_robot_dual.py`、`bpu_control_robot_dual_record.py` |
+| 1. 导出 + 量化编译 | [`convert-act-to-bpu-walkthrough.md`](convert-act-to-bpu-walkthrough.md) | `bpu_export_config_so101_cuboid_demo.yaml` |
+| 2. 部署到板 / 真机抓放 | [`deploy_guide_so101_act.md`](deploy_guide_so101_act.md) | `bpu_control_robot_dual.py` |
 | 3. 板端验证 + 性能实测 | [`board_act_validate_benchmark_guide.md`](board_act_validate_benchmark_guide.md) | `validate_act_dataset_replay.py` |
-| 4. 录实机视频 | [`record-video-walkthrough.md`](record-video-walkthrough.md) | `make_separate_videos.py`、`make_pseudo_realtime_video.py` |
 
 ## 关键约定
 
