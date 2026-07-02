@@ -11,7 +11,10 @@ experiments/
 │   ├── 2_1_pytorch  2_3_GPT2     # 基础：PyTorch / GPT2
 │   ├── 3_1_robotics 3_3_lerobot  # 机器人学 / LeRobot / LIBERO / SO-101
 │   ├── 4_2_lerobot_dataset 4_3_tele_so101
-│   ├── 5_2_ACT  6_3_pi0  6_7_vla0_exp
+│   ├── 5_2_ACT  6_3_pi0
+├── rl/                           # RL 课程演示代码（按主题组组织，见 rl/README.md）
+│   ├── 1_rl_basics/              # G1 行走 + 动作跟随，REINFORCE→A2C→PPO 三算法对照
+│   └── 2_grpo_posttraining/      # GRPO 后训练：VLM 数数 + VLA-0 自我提升
 └── lerobot/                      # lerobot 本地补丁 + RDK 板端部署（见 lerobot/rdk/README.md）
 ```
 
@@ -26,6 +29,9 @@ experiments/
 | `vla_train` | VLA GPU 训练 / 演示 | cu128（GPU，CUDA 12.8） | `lerobot[all]` |
 | `tele` | SO-101 数据采集（无卡 x86 数采机） | CPU | `lerobot[feetech]` |
 | `rdks600_act` | RDK S600/S100 ACT BPU 导出 | GPU | `lerobot[feetech]` |
+| `rl_train` | RL 组1：G1 行走 / 动作跟随训练（mjlab） | cu128（GPU） | — |
+| `rl_vlm_grpo` | RL 组2：VLM 数数 GRPO（Unsloth + TRL） | cu128（GPU） | — |
+| `vla0_grpo` | RL 组2：VLA-0 GRPO（LIBERO + xgrammar） | cu128（GPU） | `lerobot[all]` |
 
 ```bash
 cd experiments

@@ -10,10 +10,11 @@ Xbotics-One/
 ├── hardware/       # 硬件设计（外壳/底座 3D 模型、BOM）
 └── experiments/    # 演示代码 + 统一 uv 环境
     ├── vla/        # VLA（视觉-语言-动作）课程演示
+    ├── rl/         # RL（强化学习）课程演示（组自包含，见 rl/README.md）
     └── lerobot/    # lerobot 本地补丁 + RDK 板端部署
 ```
 
-- **experiments/** —— 可跑的课堂演示代码（VLA），共用一套 uv 环境；上手见 [`experiments/README.md`](experiments/README.md)。
+- **experiments/** —— 可跑的课堂演示代码（VLA + RL），共用一套 uv 环境；上手见 [`experiments/README.md`](experiments/README.md)。
 - **hardware/** —— 配套硬件（如 RDK S100 外壳）的 SolidWorks 模型与物料清单。
 - **reference/** —— 学习路线与外部资源索引（持续补充）。
 
