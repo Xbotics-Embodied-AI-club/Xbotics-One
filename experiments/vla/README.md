@@ -11,7 +11,6 @@ vla/
 │   ├── 1_1_libero_env/        #   LIBERO 环境入门
 │   └── 1_2_pi0_libero_rollout/#   π0 当黑盒跑通第一个闭环（+白噪声对照）
 ├── 2_data_collection/         # 组2 操作数据闭环
-│   ├── 2_1_lerobot_setup/     #   LeRobot 环境与版本修复说明
 │   ├── 2_2_so101_setup/       #   SO-101 串口/相机绑定
 │   ├── 2_3_teleop_record/     #   主从臂遥操作 + 数据录制
 │   └── 2_4_lerobot_dataset/   #   LeRobot 数据集格式走读
@@ -29,7 +28,6 @@ vla/
 |---|---|---|---|
 | `1_policy_rollout/1_1_libero_env` | LIBERO 环境入门 | 讲8 | 3_4_libero |
 | `1_policy_rollout/1_2_pi0_libero_rollout` | π0 第一个策略闭环 + 白噪声对照 | 讲8（讲11 π0 推理复用） | 6_3_pi0 |
-| `2_data_collection/2_1_lerobot_setup` | LeRobot 环境修复说明 | 讲9 | 3_3_lerobot |
 | `2_data_collection/2_2_so101_setup` | SO-101 硬件绑定脚本 | 讲9 | 3_5_SO101 |
 | `2_data_collection/2_3_teleop_record` | 遥操作与录制 | 讲9 | 4_3_tele_so101 |
 | `2_data_collection/2_4_lerobot_dataset` | 数据集格式走读 | 讲9 | 4_2_lerobot_dataset |
@@ -37,7 +35,7 @@ vla/
 | `4_vla_inference/`（待建，见组内 TODO.md） | OpenVLA / π0-FAST / π0.5 / VLA-0 / SmolVLA 推理 demo | 讲11 | — |
 | `5_vla_finetune/`（待建，见组内 TODO.md） | 全量 / LoRA / 多卡微调 | 讲12 | — |
 
-> 讲次调整只改本表，不动目录。RL 段（讲14-16）见 `../rl/README.md`。
+> 讲次调整只改本表，不动目录。编号只增不重排：`2_1` 已随统一 uv 环境废弃（原 LeRobot 环境修复说明），空号保留。RL 段（讲14-16）见 `../rl/README.md`。
 
 ## 环境
 

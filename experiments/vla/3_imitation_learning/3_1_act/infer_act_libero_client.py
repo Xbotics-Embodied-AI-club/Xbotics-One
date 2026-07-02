@@ -37,7 +37,7 @@ os.environ.setdefault("MUJOCO_GL", "egl")
 # 课堂演示配置：只需要改这里，不需要命令行参数。
 # POLICY_PATH 需要和训练输出目录里的 pretrained_model 对齐。
 # 这个路径会发给 server，由 server 负责加载这个 checkpoint。
-POLICY_PATH = Path("3_imitation_learning/3_1_act/outputs/act_libero_goal_plate_20260409_141037/checkpoints/000954/pretrained_model")
+POLICY_PATH = Path("vla/3_imitation_learning/3_1_act/outputs/act_libero_goal_plate_20260409_141037/checkpoints/000954/pretrained_model")
 
 # SERVER_ADDRESS 要和 infer_act_libero_server.py 里的 HOST/PORT 一致。
 SERVER_ADDRESS = "127.0.0.1:8080"

@@ -22,7 +22,7 @@ TARGET_TASK    = "put the bowl on the plate"
 TARGET_SUITE   = "libero_goal"
 TARGET_TASK_ID = 8
 RUN_NAME       = datetime.now().strftime("act_libero_goal_plate_%Y%m%d_%H%M%S")
-OUTPUT_DIR     = Path("3_imitation_learning/3_1_act/outputs") / RUN_NAME
+OUTPUT_DIR     = Path("vla/3_imitation_learning/3_1_act/outputs") / RUN_NAME
 
 # ─────────────────────── 训练参数 ───────────────────────────
 TRAIN_STEPS   = 100000

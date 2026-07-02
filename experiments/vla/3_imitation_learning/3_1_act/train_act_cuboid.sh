@@ -6,10 +6,10 @@ set -euo pipefail
 export MUJOCO_GL=egl
 # 让 MuJoCo 走 EGL 显示后端，适合无桌面环境。
 
-OUTPUT_DIR=3_imitation_learning/3_1_act/outputs/act_cuboid_local
+OUTPUT_DIR=vla/3_imitation_learning/3_1_act/outputs/act_cuboid_local
 `# 新训练和续训都使用这个输出目录。`
 RESUME="${RESUME:-false}"
-`# 默认从头训练；要继续训练时运行 RESUME=true bash 3_imitation_learning/3_1_act/train_act_cuboid.sh。`
+`# 默认从头训练；要继续训练时运行 RESUME=true bash vla/3_imitation_learning/3_1_act/train_act_cuboid.sh。`
 CONFIG_PATH="${OUTPUT_DIR}/checkpoints/last/pretrained_model/train_config.json"
 `# 继续训练时读取 last checkpoint 里的训练配置。`
 SAVE_FREQ="${SAVE_FREQ:-1200}"
@@ -20,10 +20,10 @@ BATCH_SIZE="${BATCH_SIZE:-64}"
 `# batch size 默认 64；256 在当前 GPU 显存占用下会 OOM，可用 BATCH_SIZE=128 覆盖。`
 
 TRAIN_CMD=(
-  /opt/miniforge3/envs/vla_class_lerobot/bin/lerobot-train
+  uv run lerobot-train
   --dataset.repo_id=local/cuboid \
 `# 直接读取本地 cuboid 数据集。` \
-  --dataset.root=3_imitation_learning/3_1_act/local/cuboid \
+  --dataset.root=vla/3_imitation_learning/3_1_act/local/cuboid \
 `# 显式指定你的本地数据集目录，避免读到缓存里的旧 local/cuboid。` \
   --dataset.use_imagenet_stats=false \
 `# 不使用 ImageNet 的归一化统计量。` \

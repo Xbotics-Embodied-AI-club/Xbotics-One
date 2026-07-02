@@ -28,7 +28,7 @@ os.environ.setdefault("MUJOCO_GL", "egl")
 
 
 # 课堂演示配置：只需要改这里，不需要命令行参数。
-POLICY_PATH = Path("3_imitation_learning/3_1_act/outputs/act_libero_goal_plate_20260409_141037/checkpoints/000954/pretrained_model")
+POLICY_PATH = Path("vla/3_imitation_learning/3_1_act/outputs/act_libero_goal_plate_20260409_141037/checkpoints/000954/pretrained_model")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 TASK_SUITE = "libero_goal"
 TASK_ID = 8
@@ -40,8 +40,8 @@ FPS = 20
 SEED = 7
 STRICT_LOAD = False
 SAVE_VIDEO = True
-VIDEO_PATH = Path("3_imitation_learning/3_1_act/output/act_libero_rollout.mp4")
-RESULT_PATH = Path("3_imitation_learning/3_1_act/output/act_libero_rollout.json")
+VIDEO_PATH = Path("vla/3_imitation_learning/3_1_act/output/act_libero_rollout.mp4")
+RESULT_PATH = Path("vla/3_imitation_learning/3_1_act/output/act_libero_rollout.json")
 
 
 def set_episode_index(env, episode_index: int | None) -> None:

@@ -11,7 +11,7 @@ lerobot-edit-dataset \
 `# 官方的数据集编辑命令。` \
   --repo_id=lerobot/libero \
 `# 输入数据集就是官方的 libero。` \
-  --new_root=3_imitation_learning/3_1_act/outputs/libero_goal_plate_subset \
+  --new_root=vla/3_imitation_learning/3_1_act/outputs/libero_goal_plate_subset \
 `# 新数据集输出到这个本地目录。` \
   --operation.type=split \
 `# 这里做的是 split 操作，也就是按 episode 切分数据集。` \
@@ -23,7 +23,7 @@ lerobot-train \
 `# 官方训练命令。` \
   --dataset.repo_id=lerobot/libero_train \
 `# 训练时把子数据集当成一个新的数据集名字来用。` \
-  --dataset.root=3_imitation_learning/3_1_act/outputs/libero_goal_plate_subset/train \
+  --dataset.root=vla/3_imitation_learning/3_1_act/outputs/libero_goal_plate_subset/train \
 `# 训练数据实际位置就是 split 后生成的 train 目录。` \
   --dataset.use_imagenet_stats=false \
 `# 不用 ImageNet 统计量，保持和脚本原逻辑一致。` \
@@ -47,7 +47,7 @@ lerobot-train \
 `# 训练放在 CUDA 上跑。` \
   --policy.push_to_hub=false \
 `# 不把模型推到 Hub。` \
-  --output_dir=3_imitation_learning/3_1_act/outputs/act_libero_goal_plate \
+  --output_dir=vla/3_imitation_learning/3_1_act/outputs/act_libero_goal_plate \
 `# 输出目录写死，方便课堂演示。` \
   --job_name=libero_act \
 `# 训练任务名写成 libero_act。` \

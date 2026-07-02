@@ -35,8 +35,8 @@ MAX_STEPS = {
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 SEED = 7
 FPS = 10
-OUT_PATH = Path("1_policy_rollout/1_2_pi0_libero_rollout/output/pi0_white_noise_results.json")
-VIDEO_DIR = Path("1_policy_rollout/1_2_pi0_libero_rollout/output/pi0_white_noise_videos")
+OUT_PATH = Path("vla/1_policy_rollout/1_2_pi0_libero_rollout/output/pi0_white_noise_results.json")
+VIDEO_DIR = Path("vla/1_policy_rollout/1_2_pi0_libero_rollout/output/pi0_white_noise_videos")
 IMAGE_MODES = ("white_noise", "real")
 
 

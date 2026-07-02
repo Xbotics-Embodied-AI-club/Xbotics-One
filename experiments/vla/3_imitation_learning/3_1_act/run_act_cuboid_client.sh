@@ -3,8 +3,8 @@
 set -euo pipefail
 # 任一命令失败就退出。
 
-/opt/miniforge3/envs/vla_class_lerobot/bin/python \
-`# 用装了 lerobot 的 Python 启动。` \
+uv run python \
+`# 统一 uv 环境启动（在 experiments/ 下运行）。` \
   -m lerobot.async_inference.robot_client \
 `# 启动 LeRobot 的 async inference robot client。` \
   --server_address=127.0.0.1:8080 \

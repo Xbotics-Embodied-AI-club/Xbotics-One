@@ -31,7 +31,7 @@ MAX_STEPS = 180
 FPS = 10
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 SEED = 7
-OUT_PATH = Path("1_policy_rollout/1_2_pi0_libero_rollout/output/pi0_libero_success.mp4")
+OUT_PATH = Path("vla/1_policy_rollout/1_2_pi0_libero_rollout/output/pi0_libero_success.mp4")
 
 
 def set_episode_index(env, episode_index: int) -> None:
