@@ -7,11 +7,10 @@ Xbotics 教学环境的**可跑演示代码树**：VLA（视觉-语言-动作）
 ```
 experiments/
 ├── pyproject.toml / uv.lock      # 统一环境（按 extra 切换：vla_train / tele / rdks600_act …）
-├── vla/                          # VLA 课程演示代码（按模块号组织）
-│   ├── 2_1_pytorch  2_3_GPT2     # 基础：PyTorch / GPT2
-│   ├── 3_1_robotics 3_3_lerobot  # 机器人学 / LeRobot / LIBERO / SO-101
-│   ├── 4_2_lerobot_dataset 4_3_tele_so101
-│   ├── 5_2_ACT  6_3_pi0
+├── vla/                          # VLA 课程演示代码（按主题组组织，见 vla/README.md）
+│   ├── 1_policy_rollout/         # 端到端策略闭环：LIBERO + π0 第一个闭环
+│   ├── 2_data_collection/        # 操作数据闭环：SO-101 遥操采集 + LeRobot 数据集
+│   └── 3_imitation_learning/     # 模仿学习：ACT 训练/部署/解析
 ├── rl/                           # RL 课程演示代码（按主题组组织，见 rl/README.md）
 │   ├── 1_rl_basics/              # G1 行走 + 动作跟随，REINFORCE→A2C→PPO 三算法对照
 │   └── 2_grpo_posttraining/      # GRPO 后训练：VLM 数数 + VLA-0 自我提升
@@ -52,8 +51,8 @@ cp .env.example .env          # 填 HF_TOKEN / WANDB_API_KEY / DATASETS_ROOT
 cp .envrc.example .envrc && direnv allow   # 由 DATASETS_ROOT 派生 HF_HOME / HF_LEROBOT_HOME
 ```
 
-- `DATASETS_ROOT` —— 数据集 / 模型产物根
-- `HF_HOME = $DATASETS_ROOT/hf-hub`、`HF_LEROBOT_HOME = $HF_HOME/lerobot`
+- `DATASETS_ROOT` —— 数据集 / 模型产物根（默认仓内 `experiments/datasets/`，开箱即用，可改挂载点）
+- `HF_HOME = $DATASETS_ROOT/hfcache`（HF 下载缓存，默认仓库本地）、`HF_LEROBOT_HOME = $HF_HOME/lerobot`
 - `HF_TOKEN` / `HUGGING_FACE_HUB_TOKEN` / `WANDB_API_KEY`
 
 ## 三、机器约定

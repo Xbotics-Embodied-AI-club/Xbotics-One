@@ -23,3 +23,6 @@ __pycache__/
 # 训练输出
 outputs/
 wandb/
+
+# 本地数据/缓存根（默认 DATASETS_ROOT=./datasets，hfcache 在其下）
+datasets/

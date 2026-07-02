@@ -4,7 +4,7 @@
 dotenv .env
 
 # 由数据集根派生（代码与 lerobot 都按这些变量读写缓存）
-export HF_HOME="${DATASETS_ROOT}/hf-hub"
+export HF_HOME="${DATASETS_ROOT}/hfcache"   # HF 下载缓存，默认落在仓库本地
 export HF_LEROBOT_HOME="${HF_HOME}/lerobot"
 
 # uv 虚拟环境位置（默认 ./.venv，按需改到大盘）
